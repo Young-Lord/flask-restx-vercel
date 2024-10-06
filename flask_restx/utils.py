@@ -27,17 +27,14 @@ __all__ = (
 def import_werkzeug_response():
     """Resolve `werkzeug` `Response` class import because
     `BaseResponse` was renamed in version 2.* to `Response`"""
-    import importlib.metadata
-
-    werkzeug_major = int(importlib.metadata.version("werkzeug").split(".")[0])
-    if werkzeug_major < 2:
+    try:
         from werkzeug.wrappers import BaseResponse
 
         return BaseResponse
+    except:
+        from werkzeug.wrappers import Response
 
-    from werkzeug.wrappers import Response
-
-    return Response
+        return Response
 
 
 BaseResponse = import_werkzeug_response()
